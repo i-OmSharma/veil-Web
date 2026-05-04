@@ -104,8 +104,8 @@ export default function About() {
                 ['Written in',     'Go + C (shim)',     'Go + C',           'Pure Go'],
                 ['cgroups',        'v1 + v2',           'v1 + v2',          'v2 only'],
                 ['OCI compliant',  'Yes',               'Yes',              'Yes'],
-                ['Binary size',    '~100MB (daemon)',   '~50MB',            '<8MB'],
-                ['Cold start',     '~500ms',            '~200ms',           '<50ms'],
+                // ['Binary size',    '~100MB (daemon)',   '~50MB',            '<8MB'],
+                // ['Cold start',     '~500ms',            '~200ms',           '<50ms'],
               ].map(([label, docker, podman, veil], i) => (
                 <div key={i} className="grid grid-cols-4 gap-x-6 py-2.5 border-t border-gray-100">
                   <span className="text-xs font-bold tracking-wide uppercase text-gray-400">{label}</span>
