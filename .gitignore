@@ -25,3 +25,6 @@ yarn-error.log*
 .terraform/
 terraform.tfstate
 terraform.tfstate.backup
+
+claude/
+.playwright-mcp/
