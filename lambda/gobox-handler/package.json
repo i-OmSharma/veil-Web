@@ -1,0 +1,18 @@
+{
+  "name": "gobox-handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Om Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1041.0",
+    "@aws-sdk/client-sesv2": "^3.1041.0",
+    "@aws-sdk/lib-dynamodb": "^3.1041.0"
+  }
+}
