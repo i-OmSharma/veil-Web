@@ -1,6 +1,6 @@
 # Veil — Binary Distribution Platform 📦
 
-veil is a minimal, production-grade platform to distribute binaries, track downloads, and collect user feedback — built using a serverless AWS architecture.
+veils.systems is a minimal platform to distribute binaries, track downloads, and collect user feedback — built using a serverless AWS architecture.
 
 
 ---
