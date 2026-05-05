@@ -11,12 +11,10 @@ export default function About() {
               About<span className="text-red-600">.</span>
             </h1>
           </div>
-          {/* UPDATED: description rewrite */}
           <p className="text-gray-600 text-lg md:text-xl font-normal tracking-wide mt-4 max-w-lg">
             veil is a daemonless, OCI-compliant container runtime written in Go — built from scratch on Linux primitives. No wrappers, no abstractions. Just syscalls.
           </p>
 
-          {/* UPDATED: added 4th stat v2 / cgroups only */}
           <div className="mt-8 flex flex-wrap gap-12">
             <div>
               <span className="text-4xl font-black text-[#2d2d2d]">100<span className="text-red-600">%</span></span>
@@ -30,14 +28,12 @@ export default function About() {
               <span className="text-4xl font-black text-[#2d2d2d]">0<span className="text-red-600">deps</span></span>
               <p className="text-gray-400 text-sm font-bold tracking-wide uppercase mt-1">Dependencies</p>
             </div>
-            {/* UPDATED: new stat */}
             <div>
               <span className="text-4xl font-black text-[#2d2d2d]">v<span className="text-red-600">2</span></span>
               <p className="text-gray-400 text-sm font-bold tracking-wide uppercase mt-1">cgroups only</p>
             </div>
           </div>
 
-          {/* UPDATED: Features section — How it Works style */}
           <section className="w-full py-20 border-t border-gray-100 mt-12">
             <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">Features</h2>
             <div className="space-y-8">
@@ -86,7 +82,6 @@ export default function About() {
             </div>
           </section>
 
-          {/* UPDATED: Comparison section — Why Veil style */}
           <section className="w-full py-20 border-t border-gray-100">
             <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">Veil vs The World</h2>
 

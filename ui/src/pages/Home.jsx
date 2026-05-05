@@ -8,6 +8,7 @@ const validEmail = (e) => e.includes('@') && e.trim().length > 0
 export default function Home() {
   const [nlEmail, setNlEmail] = useState('')
   const [nlChecked, setNlChecked] = useState(false)
+  const [nlStatus, setNlStatus] = useState(null)
 
   return (
     <>
@@ -17,7 +18,7 @@ export default function Home() {
         <div className="w-full max-w-4xl mx-auto px-6">
           <div className="relative inline-block">
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-2">
-              veil<span className="text-red-600">.</span> {/* UPDATED: goBox → veil */}
+              veil<span className="text-red-600">.</span>
             </h1>
           </div>
           <p className="text-gray-600 text-lg md:text-xl font-normal tracking-wide mt-4 max-w-md">
@@ -26,13 +27,12 @@ export default function Home() {
           <div className="mt-12">
             <button
               type="button"
-              aria-label="Download veil for Linux" // UPDATED: Download goBox → Download veil
+              aria-label="Download veil for Linux"
               className="group flex items-center space-x-4 focus:outline-none"
               onClick={() => {
                 const p = navigator.platform
                 const os = p.includes('Mac') ? 'mac' : p.includes('Win') ? 'windows' : 'linux'
                 const BASE_URL = import.meta.env.VITE_API_URL || ""
-                console.log('download_clicked', os)
                 window.location.href = `${BASE_URL}/download?os=${os}`
               }}
             >
@@ -56,7 +56,6 @@ export default function Home() {
       </main>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20">
-        {/* UPDATED: What is Gobox → What is Veil */}
         <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">What is Veil</h2>
         <p className="text-2xl font-black tracking-tight text-[#2d2d2d] leading-snug max-w-xl">
           A lightweight container runtime built on Linux primitives.
@@ -103,7 +102,7 @@ export default function Home() {
           </div>
           <pre className="text-base font-mono text-gray-300 leading-relaxed">
             <span className="text-gray-500">$ </span>
-            <span className="text-white">veil pull ubuntu:22.04</span>{/* UPDATED: sudo gobox → veil */}
+            <span className="text-white">veil pull ubuntu:22.04</span>
             {'\n'}
             <span className="text-gray-500">→ pulling ubuntu:22.04 from registry</span>
             {'\n'}
@@ -113,7 +112,7 @@ export default function Home() {
             {'\n'}
             {'\n'}
             <span className="text-gray-500">$ </span>
-            <span className="text-white">veil run ubuntu:22.04 /bin/bash</span>{/* UPDATED: sudo gobox → veil */}
+            <span className="text-white">veil run ubuntu:22.04 /bin/bash</span>
             {'\n'}
             <span className="text-gray-500">→ creating namespaces</span>
             {'\n'}
@@ -121,16 +120,15 @@ export default function Home() {
             {'\n'}
             <span className="text-gray-500">→ applying cgroup limits (256MB / 50% cpu)</span>
             {'\n'}
-            <span className="text-green-400">✓ container ready  [veil-4821]</span>{/* UPDATED: gobox-4821 → veil-4821 */}
+            <span className="text-green-400">✓ container ready  [veil-4821]</span>
             {'\n'}
             {'\n'}
-            {'root@veil-4821:/# '}{/* UPDATED: gobox-4821 → veil-4821 */}
+            {'root@veil-4821:/# '}
           </pre>
         </div>
       </section>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
-        {/* UPDATED: Why Gobox → Why Veil */}
         <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">Why Veil</h2>
         <ul className="space-y-4">
           {[
@@ -149,11 +147,13 @@ export default function Home() {
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
         <h2 className="text-2xl font-black tracking-tight text-[#2d2d2d]">
-          Stay updated with veil<span className="text-red-600">.</span> {/* UPDATED: Gobox → veil */}
+          Stay updated with veil<span className="text-red-600">.</span>
         </h2>
         <p className="text-gray-600 text-base mt-2">Get updates and releases</p>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-8">
           <input
+            id="nl-email"
+            name="nl-email"
             type="email"
             aria-label="Email address"
             placeholder="your@email.com"
@@ -163,15 +163,27 @@ export default function Home() {
           />
           <button
             type="button"
-            disabled={!validEmail(nlEmail) || !nlChecked}
+            disabled={!validEmail(nlEmail) || !nlChecked || nlStatus === 'success'}
             className="text-base font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 hover:text-red-600 hover:border-red-600 transition-colors focus:outline-none disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-[#2d2d2d] disabled:hover:border-[#2d2d2d]"
-            onClick={() => {
-              console.log('newsletter subscribe:', nlEmail)
-              alert('Subscribed! You will receive Veil updates.')
+            onClick={async () => {
+              try {
+                const BASE_URL = import.meta.env.VITE_API_URL || ""
+                const res = await fetch(`${BASE_URL}/api/feedback`, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: nlEmail, message: '' }),
+                })
+                if (!res.ok) throw new Error()
+                setNlStatus('success')
+              } catch {
+                setNlStatus('error')
+              }
             }}
           >
             Subscribe
           </button>
+          {nlStatus === 'success' && <span className="text-green-600 text-sm font-bold">Subscribed!</span>}
+          {nlStatus === 'error' && <span className="text-red-600 text-sm font-bold">Failed. Try again.</span>}
         </div>
         <label className="flex items-center space-x-2 mt-4 cursor-pointer select-none">
           <input

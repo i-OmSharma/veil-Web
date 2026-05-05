@@ -7,7 +7,6 @@ export default function FloatingPopup() {
   const [popupEmail, setPopupEmail] = useState('')
 
   useEffect(() => {
-    // UPDATED: gobox_popup_dismissed → veil_popup_dismissed
     if (localStorage.getItem('veil_popup_dismissed') === 'true') return
 
     let triggered = false
@@ -33,7 +32,6 @@ export default function FloatingPopup() {
 
   const dismissPopup = () => {
     setShowPopup(false)
-    // UPDATED: gobox_popup_dismissed → veil_popup_dismissed
     localStorage.setItem('veil_popup_dismissed', 'true')
   }
 
@@ -54,6 +52,8 @@ export default function FloatingPopup() {
       </p>
       <p className="text-gray-600 text-xs leading-relaxed mb-5">Get Veil releases in your inbox.</p>
       <input
+        id="popup-email"
+        name="popup-email"
         type="email"
         aria-label="Email address"
         placeholder="your@email.com"
@@ -64,9 +64,16 @@ export default function FloatingPopup() {
       <button
         type="button"
         className="w-full bg-black text-white text-xs font-bold tracking-wide uppercase py-2.5 hover:bg-[#2d2d2d] transition-colors focus:outline-none"
-        onClick={() => {
+        onClick={async () => {
           if (!validEmail(popupEmail)) return
-          console.log('popup subscribe:', popupEmail)
+          try {
+            const BASE_URL = import.meta.env.VITE_API_URL || ""
+            await fetch(`${BASE_URL}/api/feedback`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: popupEmail, message: '' }),
+            })
+          } catch {}
           dismissPopup()
         }}
       >

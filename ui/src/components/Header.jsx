@@ -13,7 +13,6 @@ export default function Header() {
       ? 'text-black transition-colors flex flex-col items-center'
       : 'hover:text-black transition-colors'
 
-  // FIXED: text-xs → text-sm for menu items
   const menuItemClass = (active) =>
     `w-full text-left px-5 py-3 text-sm font-bold tracking-wide uppercase transition-colors ${
       active ? 'text-red-600 bg-gray-50' : 'text-gray-500 hover:text-black hover:bg-gray-50'
@@ -32,7 +31,6 @@ export default function Header() {
             <div className="absolute top-0 left-0 w-3 h-3 bg-red-600"></div>
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#2d2d2d]"></div>
           </button>
-          {/* FIXED: text-xs → text-sm for nav links */}
           <nav className="hidden md:flex space-x-6 text-sm font-bold tracking-wide text-gray-500 uppercase">
             <a className={navClass(isHome)} href="/">
               Home
