@@ -14,10 +14,10 @@ export const json = (statusCode, body) => ({
     body: JSON.stringify(body)
 });
 
-export const redirect = (localtion) => ({ //used for redirecting to locaiton
+export const redirect = (location) => ({
     statusCode: 302,
     headers: {
         ...baseHeaders,
-        Location: localtion
+        Location: location
     }
 })

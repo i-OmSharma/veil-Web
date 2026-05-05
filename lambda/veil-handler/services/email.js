@@ -9,7 +9,7 @@ const ses = new SESv2Client({
 export const sendEmail = async (to, subject, body) => {
 
     if (!to) {
-        return { status: 400,  message: "Email missing"}
+        throw new Error("Email missing");
     }
   try {
     await ses.send(
@@ -34,5 +34,6 @@ export const sendEmail = async (to, subject, body) => {
     );
   } catch (err) {
     console.error("SESv2 error", err);
+    throw err;
   }
 };

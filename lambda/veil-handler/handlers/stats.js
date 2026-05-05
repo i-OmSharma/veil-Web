@@ -15,6 +15,6 @@ export const handleStats = async () => {
         return json(200, { downloads: total })
     } catch (err) {
         console.error("Error fetching stats", err)
-        return json(200, { downloads: 0 })
+        return json(500, { error: "Failed to fetch stats" })
     }
 }

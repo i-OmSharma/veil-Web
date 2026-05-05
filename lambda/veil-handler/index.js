@@ -1,4 +1,5 @@
 import { route } from "./router.js";
+import { json } from "./utils/response.js";
    
 export const handler = async (event) => {
     console.log("EVENT:", JSON.stringify(event));
@@ -10,9 +11,6 @@ export const handler = async (event) => {
     } catch (error) {
         console.error("Error in handler", error)
     
-        return {
-            statusCode: 500,
-            body: JSON.stringify({error: "Internal server error"})
-        }
+        return json(500, { error: "Internal server error" })
     }
 }

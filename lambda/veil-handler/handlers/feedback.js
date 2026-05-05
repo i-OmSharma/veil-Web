@@ -24,7 +24,7 @@ export const handleFeedback = async (event) => {
     await saveFeedback(data);
     await sendEmail(
       body.email,
-      "Feedback for goBox",
+      "Feedback for veil",
       `Thank you for your feedback. We will get back to you soon. \n\n Message: ${body.message}`,
     );
     return json(200, { message: "Feedback submitted successfully" });
