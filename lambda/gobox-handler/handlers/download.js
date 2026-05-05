@@ -1,6 +1,6 @@
-import { incrementMetrics } from "../services/dynamodb";
-import { redirect, json } from "../utils/response"
-import { CONFIG } from "../config";
+import { incrementMetrics } from "../services/dynamodb.js";
+import { redirect } from "../utils/response.js";
+import { CONFIG } from "../config.js";
 
 
 export const handleDownload = async (event) => {
@@ -19,11 +19,8 @@ export const handleDownload = async (event) => {
     }
 
     if (os === "linux") {
-        return redirect(CONFIG.DOWNLOAD_PATH)
+        return redirect(CONFIG.DOWNLOAD_PATH);
     }
 
-    return json(200, {
-        message: `${os.charAt(0).toUpperCase() + os.slice(1)} version coming soon`,
-        linuxPath: CONFIG.DOWNLOAD_PATH
-    })
+    return redirect("/unsupported");
 };

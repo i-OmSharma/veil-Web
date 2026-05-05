@@ -1,13 +1,13 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, UpdateItemCommand, GetItemCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import { CONFIG } from "../config";
+import { DynamoDBDocumentClient, UpdateCommand, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { CONFIG } from "../config.js";
 
 
 const client = new DynamoDBClient({ region: CONFIG.REGION });
 const docClient = DynamoDBDocumentClient.from(client);
 
 export const incrementMetrics = async (key) => {
-  await docClient.send(new UpdateItemCommand({
+  await docClient.send(new UpdateCommand({
       TableName: CONFIG.METRICS_TABLE,
       Key: { metric_key: key },
       UpdateExpression: "SET #count = if_not_exists(#count, :zero) + :inc",
@@ -18,7 +18,7 @@ export const incrementMetrics = async (key) => {
 };
 
 export const getMetrics = async (key) => {
-  const res = await docClient.send(new GetItemCommand({
+  const res = await docClient.send(new GetCommand({
     TableName: CONFIG.METRICS_TABLE,
     Key: { metric_key: key },
   }))

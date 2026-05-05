@@ -1,7 +1,7 @@
-import { handleDownload } from "./handlers/download";
-import { handleFeedback } from "./handlers/feedback";
-import { handleStats } from "./handlers/stats";
-import { json } from "./utils/response";
+import { handleDownload } from "./handlers/download.js";
+import { handleFeedback } from "./handlers/feedback.js";
+import { handleStats } from "./handlers/stats.js";
+import { json } from "./utils/response.js";
 
 export const route = async (event) => {
   const path = event.rawPath;

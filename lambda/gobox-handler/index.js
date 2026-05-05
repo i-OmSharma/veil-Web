@@ -1,4 +1,4 @@
-import { route } from "./router";
+import { route } from "./router.js";
    
 export const handler = async (event) => {
     console.log("EVENT:", JSON.stringify(event));

@@ -1,5 +1,5 @@
-import { getMetrics } from "../services/dynamodb"
-import { json } from "../utils/response"
+import { getMetrics } from "../services/dynamodb.js";
+import { json } from "../utils/response.js";
 
 
 export const handleStats = async () => {

@@ -1,5 +1,5 @@
 import {SESv2Client, SendEmailCommand} from "@aws-sdk/client-sesv2";
-import { CONFIG } from "../config";
+import { CONFIG } from "../config.js";
 
 
 const ses = new SESv2Client({

@@ -1,6 +1,6 @@
-import { json } from "../utils/response";
-import { saveFeedback } from "../services/dynamodb";
-import { sendEmail } from "../services/email";
+import { json } from "../utils/response.js";
+import { saveFeedback } from "../services/dynamodb.js";
+import { sendEmail } from "../services/email.js";
 
 export const handleFeedback = async (event) => {
   let body;
