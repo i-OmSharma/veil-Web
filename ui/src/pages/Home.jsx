@@ -31,8 +31,9 @@ export default function Home() {
               onClick={() => {
                 const p = navigator.platform
                 const os = p.includes('Mac') ? 'mac' : p.includes('Win') ? 'windows' : 'linux'
+                const BASE_URL = import.meta.env.VITE_API_URL || ""
                 console.log('download_clicked', os)
-                window.location.href = `/download?os=${os}`
+                window.location.href = `${BASE_URL}/download?os=${os}`
               }}
             >
               <span className="font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 group-hover:text-red-600 group-hover:border-red-600 transition-colors duration-300 text-sm">
