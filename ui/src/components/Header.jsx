@@ -4,6 +4,7 @@ const path = window.location.pathname
 const isHome = path === '/'
 const isInstruction = path === '/instruction'
 const isAbout = path === '/about'
+const isReleases = path === '/releases'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -40,6 +41,10 @@ export default function Header() {
               Instruction
               {isInstruction && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
             </a>
+            <a className={navClass(isReleases)} href="/releases">
+              Releases
+              {isReleases && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
+            </a>
             <a className={navClass(isAbout)} href="/about">
               About
               {isAbout && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
@@ -62,6 +67,7 @@ export default function Header() {
             <button type="button" className={menuItemClass(isHome)} onClick={() => { window.location.href = '/' }}>Home</button>
             <button type="button" className={menuItemClass(isInstruction)} onClick={() => { window.location.href = '/instruction' }}>Instruction</button>
             <button type="button" className={menuItemClass(isAbout)} onClick={() => { window.location.href = '/about' }}>About</button>
+            <button type="button" className={menuItemClass(isReleases)} onClick={() => { window.location.href = '/releases' }}>Releases</button>
           </div>
         )}
       </div>

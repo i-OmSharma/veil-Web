@@ -30,10 +30,29 @@ export default function Home() {
               aria-label="Download veil for Linux"
               className="group flex items-center space-x-4 focus:outline-none"
               onClick={() => {
-                const p = navigator.platform
-                const os = p.includes('Mac') ? 'mac' : p.includes('Win') ? 'windows' : 'linux'
                 const BASE_URL = import.meta.env.VITE_API_URL || ""
-                window.location.href = `${BASE_URL}/download?os=${os}`
+                const platform = navigator.platform.toLowerCase()
+                const userAgent = navigator.userAgent.toLowerCase()
+                const isMac = platform.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('mac os x')
+                const isWindows = platform.includes('win') || userAgent.includes('windows')
+                const isLinux = platform.includes('linux') || userAgent.includes('linux')
+
+                if (isLinux) {
+                  window.location.href = `${BASE_URL}/download?os=linux`
+                  return
+                }
+
+                if (isMac) {
+                  window.location.href = '/os-warning?os=mac'
+                  return
+                }
+
+                if (isWindows) {
+                  window.location.href = '/os-warning?os=windows'
+                  return
+                }
+
+                window.location.href = `${BASE_URL}/download?os=linux`
               }}
             >
               <span className="font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 group-hover:text-red-600 group-hover:border-red-600 transition-colors duration-300 text-sm">
