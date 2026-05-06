@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "veil" {
   function_name = "${var.project_name}-lambda"
 
-  filename = "../../lambda/veil-handler/function.zip"
+  filename = "${path.root}/../lambda/veil-handler/function.zip"
   handler = "index.handler"
   runtime     = "nodejs22.x"
   timeout     = 10
