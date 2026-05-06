@@ -23,6 +23,7 @@ yarn-error.log*
 
 # Terraform (later)
 .terraform/
+*.tfvars
 terraform.tfstate
 terraform.tfstate.backup
 
