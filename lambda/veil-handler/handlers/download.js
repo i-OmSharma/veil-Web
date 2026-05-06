@@ -1,5 +1,6 @@
 import { incrementMetrics } from "../services/dynamodb.js";
 import { redirect } from "../utils/response.js";
+import { json } from "../utils/response.js";
 import { CONFIG } from "../config.js";
 
 
@@ -19,8 +20,18 @@ export const handleDownload = async (event) => {
     }
 
     if (os === "linux") {
-        return redirect(CONFIG.DOWNLOAD_PATH);
+        return json(200, {
+            status: "coming_soon",
+            message: "Binary not released yet",
+            os: "linux",
+        });
     }
 
-    return redirect("/unsupported");
+    const osLabel = os === "mac" ? "Mac" : "Windows";
+    return json(200, {
+        status: "unsupported",
+        message: `${osLabel} coming soon. Linux version available.`,
+        os,
+        linux_available: true,
+    });
 };
