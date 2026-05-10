@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -11,6 +11,15 @@ export default function Home() {
   const [nlEmail, setNlEmail] = useState('')
   const [nlChecked, setNlChecked] = useState(false)
   const [nlStatus, setNlStatus] = useState(null)
+  const [downloads, setDownloads] = useState(null)
+
+  useEffect(() => {
+    const BASE_URL = import.meta.env.VITE_API_URL || ""
+    fetch(`${BASE_URL}/api/stats`)
+      .then((r) => r.json())
+      .then((d) => setDownloads(d.downloads))
+      .catch(() => {})
+  }, [])
 
   return (
     <>
@@ -66,6 +75,11 @@ export default function Home() {
                 </svg>
               </div>
             </button>
+            {downloads !== null && downloads > 0 && (
+              <p className="mt-4 text-xs text-gray-400 font-bold tracking-wide uppercase">
+                {downloads.toLocaleString()} download{downloads !== 1 ? 's' : ''}
+              </p>
+            )}
           </div>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">

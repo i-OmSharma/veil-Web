@@ -7,7 +7,7 @@ export default function Footer() {
           <p className="text-gray-400 text-sm mt-1">support@veils.systems</p>
         </div>
         <div className="flex items-center space-x-6">
-          <a href="https://github.com/i-OmSharma" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#2d2d2d] text-sm font-bold tracking-wide uppercase transition-colors">GitHub</a>
+          <a href="https://github.com/i-OmSharma/veil" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#2d2d2d] text-sm font-bold tracking-wide uppercase transition-colors">GitHub</a>
           <a href="https://www.linkedin.com/in/om-sharma-020b9a249/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-[#2d2d2d] text-sm font-bold tracking-wide uppercase transition-colors">LinkedIn</a>
         </div>
         <p className="text-gray-300 text-sm">© {new Date().getFullYear()} Veil. All rights reserved.</p>
