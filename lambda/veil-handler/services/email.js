@@ -1,39 +1,39 @@
-import {SESv2Client, SendEmailCommand} from "@aws-sdk/client-sesv2";
-import { CONFIG } from "../config.js";
+import { Resend } from "resend";
+import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
 
+if (!process.env.FROM_EMAIL) throw new Error("FROM_EMAIL env var not set");
+if (!process.env.SSM_PARAM_RESEND_API_KEY) throw new Error("SSM_PARAM_RESEND_API_KEY env var not set");
 
-const ses = new SESv2Client({
-  region: CONFIG.REGION,
-});
+const ssm = new SSMClient({});
+let _cachedApiKey;
+
+const getResendApiKey = async () => {
+  if (_cachedApiKey) return _cachedApiKey;
+  const { Parameter } = await ssm.send(
+    new GetParameterCommand({
+      Name: process.env.SSM_PARAM_RESEND_API_KEY,
+      WithDecryption: true,
+    })
+  );
+  _cachedApiKey = Parameter.Value;
+  return _cachedApiKey;
+};
 
 export const sendEmail = async (to, subject, body) => {
+  if (!to) throw new Error("Recipient email missing");
 
-    if (!to) {
-        throw new Error("Email missing");
-    }
+  const apiKey = await getResendApiKey();
+  const resend = new Resend(apiKey);
+
   try {
-    await ses.send(
-      new SendEmailCommand({
-        FromEmailAddress: CONFIG.FROM_EMAIL,
-        Destination: {
-          ToAddresses: [to],
-        },
-        Content: {
-          Simple: {
-            Subject: {
-              Data: subject,
-            },
-            Body: {
-              Text: {
-                Data: body,
-              },
-            },
-          },
-        },
-      }),
-    );
+    await resend.emails.send({
+      from: `Veil <${process.env.FROM_EMAIL}>`,
+      to: [to],
+      subject,
+      html: `<div style="font-family: sans-serif;"><h2>Veil</h2><p>${body}</p></div>`,
+    });
   } catch (err) {
-    console.error("SESv2 error", err);
+    console.error("Resend error", err);
     throw err;
   }
 };
