@@ -76,7 +76,7 @@ const subscriptionHtml = () => baseTemplate(`
         Veil is a daemonless, OCI-compliant container runtime written in Go — built from scratch on Linux primitives. No daemons, no wrappers, no runtime dependencies. Just namespaces, cgroups v2, and OverlayFS.
       </p>
       <!-- CTAs -->
-      <table cellpadding="0" cellspacing="0">
+      <table cellpadding="0" cellspacing="0" style="margin-top:8px;">
         <tr>
           <td style="background:#2d2d2d;padding:13px 24px;">
             <a href="https://d2j4l2b1keiov4.cloudfront.net" style="font-size:11px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Visit Site</a>
@@ -84,32 +84,6 @@ const subscriptionHtml = () => baseTemplate(`
           <td width="16"></td>
           <td style="padding:13px 0;border-bottom:2px solid #2d2d2d;">
             <a href="https://github.com/i-OmSharma/veil" style="font-size:11px;font-weight:700;color:#2d2d2d;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">GitHub →</a>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-
-  <!-- Stats bar -->
-  <tr>
-    <td style="padding:0 48px 40px;">
-      <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #f0f0f0;margin-top:8px;">
-        <tr>
-          <td width="25%" style="padding-top:24px;vertical-align:top;">
-            <p style="font-size:20px;font-weight:900;color:#2d2d2d;margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">&lt;8<span style="color:#dc2626;">MB</span></p>
-            <p style="font-size:10px;font-weight:700;color:#9ca3af;margin:4px 0 0;letter-spacing:1px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Binary</p>
-          </td>
-          <td width="25%" style="padding-top:24px;vertical-align:top;">
-            <p style="font-size:20px;font-weight:900;color:#2d2d2d;margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">0<span style="color:#dc2626;">deps</span></p>
-            <p style="font-size:10px;font-weight:700;color:#9ca3af;margin:4px 0 0;letter-spacing:1px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Runtime</p>
-          </td>
-          <td width="25%" style="padding-top:24px;vertical-align:top;">
-            <p style="font-size:20px;font-weight:900;color:#2d2d2d;margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">v<span style="color:#dc2626;">2</span></p>
-            <p style="font-size:10px;font-weight:700;color:#9ca3af;margin:4px 0 0;letter-spacing:1px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">cgroups</p>
-          </td>
-          <td width="25%" style="padding-top:24px;vertical-align:top;">
-            <p style="font-size:20px;font-weight:900;color:#2d2d2d;margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Go</p>
-            <p style="font-size:10px;font-weight:700;color:#9ca3af;margin:4px 0 0;letter-spacing:1px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Language</p>
           </td>
         </tr>
       </table>
