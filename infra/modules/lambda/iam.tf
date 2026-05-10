@@ -1,19 +1,16 @@
 resource "aws_iam_role" "lambda_role" {
-  name = "${var.project_name}-lambda-role"
+  name = "${local.prefix}-lambda-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Sid    = ""
-        Principal = {
-          Service = "lambda.amazonaws.com"
-        }
-      },
-    ]
+    Statement = [{
+      Action    = "sts:AssumeRole"
+      Effect    = "Allow"
+      Principal = { Service = "lambda.amazonaws.com" }
+    }]
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
@@ -21,33 +18,36 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-
 resource "aws_iam_policy" "custom" {
-  name = "${var.project_name}-lambda-policy"
+  name = "${local.prefix}-lambda-policy"
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
-        {
-            Effect = "Allow"
-            Action = [
-                "dynamodb:PutItem",
-                "dynamodb:GetItem",
-                "dynamodb:UpdateItem",
-                "dynamodb:Scan"
-            ]
-            Resource = "*"
-        },
-        {
-            Effect = "Allow"
-            Action = [
-                "ses:SendEmail",
-                "ses:SendRawEmail"
-            ]
-            Resource = "*"
-        }
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:PutItem",
+          "dynamodb:GetItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:Query",
+        ]
+        Resource = [
+          var.metrics_table_arn,
+          var.feedback_table_arn,
+          "${var.metrics_table_arn}/index/*",
+          "${var.feedback_table_arn}/index/*",
+        ]
+      },
+      {
+        Effect   = "Allow"
+        Action   = ["ssm:GetParameter"]
+        Resource = aws_ssm_parameter.resend_api_key.arn
+      },
     ]
   })
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy_attachment" "custom_attach" {

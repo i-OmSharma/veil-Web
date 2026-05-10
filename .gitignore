@@ -27,5 +27,21 @@ yarn-error.log*
 terraform.tfstate
 terraform.tfstate.backup
 
+
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+
+*.auto.tfvars
+secret*.tfvars
+
+# terraform plan + lambda zip
+tfplan
+*.zip
+
+#claude
+
 claude/
 .playwright-mcp/
