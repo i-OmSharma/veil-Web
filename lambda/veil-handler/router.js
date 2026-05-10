@@ -1,6 +1,7 @@
 import { handleDownload } from "./handlers/download.js";
 import { handleFeedback } from "./handlers/feedback.js";
 import { handleStats } from "./handlers/stats.js";
+import { handleVisit } from "./handlers/visit.js";
 import { json } from "./utils/response.js";
 
 export const route = async (event) => {
@@ -29,6 +30,10 @@ export const route = async (event) => {
 
   if (path === "/api/stats" && method === "GET") {
     return handleStats(event);
+  }
+
+  if (path === "/api/visit" && method === "POST") {
+    return handleVisit(event);
   }
 
   return json(404, { message: "Not Found" });

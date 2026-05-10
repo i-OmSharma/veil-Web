@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     const BASE_URL = import.meta.env.VITE_API_URL || ""
-    fetch(`${BASE_URL}/api/stats`)
+    fetch(`${BASE_URL}/api/visit`, { method: 'POST' })
       .then((r) => r.json())
       .then((d) => setStats(d))
       .catch(() => {})
@@ -37,9 +37,11 @@ export default function Home() {
       const res = await fetch(`${BASE_URL}/download?os=linux`)
       const data = await res.json()
       if (data.status === 'coming_soon') {
+        setStats((prev) => prev ? { ...prev, downloads: prev.downloads + 1 } : prev)
         setDlState('coming_soon')
       } else if (data.url) {
         window.location.href = data.url
+        setStats((prev) => prev ? { ...prev, downloads: prev.downloads + 1 } : prev)
         setDlState(null)
       }
     } catch {
@@ -54,7 +56,7 @@ export default function Home() {
       <main className="h-screen flex items-center justify-center relative z-0">
         <div className="w-full max-w-4xl mx-auto px-6">
           <div className="relative inline-block">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-2">
+            <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-2">
               veil<span className="text-red-600">.</span>
             </h1>
           </div>
@@ -111,7 +113,7 @@ export default function Home() {
         </div>
 
         {stats && (stats.downloads > 0 || stats.visits > 0) && (
-          <div className="absolute bottom-8 left-6 flex flex-col gap-2 pointer-events-none">
+          <div className="fixed bottom-8 left-6 hidden sm:flex flex-col gap-2 pointer-events-none z-10">
             {stats.downloads > 0 && (
               <div>
                 <p className="text-xl font-black text-[#2d2d2d] leading-none">{stats.downloads.toLocaleString()}</p>
@@ -167,7 +169,7 @@ export default function Home() {
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
         <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">CLI Example</h2>
-        <div className="bg-[#2d2d2d] rounded-xl px-6 py-5 inline-block border border-[#1a1a1a]">
+        <div className="bg-[#2d2d2d] rounded-xl px-6 py-5 inline-block border border-[#1a1a1a] w-full max-w-full overflow-x-auto">
           <div className="flex items-center space-x-2 mb-3">
             <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
@@ -223,7 +225,7 @@ export default function Home() {
           Stay updated with Veil<span className="text-red-600">.</span>
         </h2>
         <p className="text-gray-600 text-base mt-2">Get product updates and new releases directly in your inbox.</p>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-8">
+        <div className="mt-8 flex flex-col gap-3 sm:max-w-sm">
           <input
             id="nl-email"
             name="nl-email"
@@ -232,41 +234,43 @@ export default function Home() {
             placeholder="Enter your email"
             value={nlEmail}
             onChange={(e) => setNlEmail(e.target.value)}
-            className="border border-gray-300 px-3 py-2.5 text-base font-mono text-[#2d2d2d] placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors bg-white w-full sm:w-64"
+            className="border border-gray-300 px-3 py-2.5 text-base font-mono text-[#2d2d2d] placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors bg-white w-full"
           />
-          <button
-            type="button"
-            disabled={!validEmail(nlEmail) || !nlChecked || nlStatus === 'success'}
-            className="text-base font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 hover:text-red-600 hover:border-red-600 transition-colors focus:outline-none disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-[#2d2d2d] disabled:hover:border-[#2d2d2d]"
-            onClick={async () => {
-              try {
-                const BASE_URL = import.meta.env.VITE_API_URL || ""
-                const res = await fetch(`${BASE_URL}/api/feedback`, {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ email: nlEmail, message: '' }),
-                })
-                if (!res.ok) throw new Error()
-                setNlStatus('success')
-              } catch {
-                setNlStatus('error')
-              }
-            }}
-          >
-            Subscribe
-          </button>
-          {nlStatus === 'success' && <span className="text-green-600 text-sm font-bold">Subscribed!</span>}
-          {nlStatus === 'error' && <span className="text-red-600 text-sm font-bold">Failed. Try again.</span>}
+          <label className="flex items-center space-x-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={nlChecked}
+              onChange={(e) => setNlChecked(e.target.checked)}
+              className="accent-red-600 w-3.5 h-3.5 shrink-0"
+            />
+            <span className="text-gray-500 text-sm">I agree to receive updates</span>
+          </label>
+          <div className="flex items-center gap-4">
+            <button
+              type="button"
+              disabled={!validEmail(nlEmail) || !nlChecked || nlStatus === 'success'}
+              className="text-base font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 hover:text-red-600 hover:border-red-600 transition-colors focus:outline-none disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-[#2d2d2d] disabled:hover:border-[#2d2d2d]"
+              onClick={async () => {
+                try {
+                  const BASE_URL = import.meta.env.VITE_API_URL || ""
+                  const res = await fetch(`${BASE_URL}/api/feedback`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: nlEmail, message: '' }),
+                  })
+                  if (!res.ok) throw new Error()
+                  setNlStatus('success')
+                } catch {
+                  setNlStatus('error')
+                }
+              }}
+            >
+              Subscribe
+            </button>
+            {nlStatus === 'success' && <span className="text-green-600 text-sm font-bold">Subscribed!</span>}
+            {nlStatus === 'error' && <span className="text-red-600 text-sm font-bold">Failed. Try again.</span>}
+          </div>
         </div>
-        <label className="flex items-center space-x-2 mt-4 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={nlChecked}
-            onChange={(e) => setNlChecked(e.target.checked)}
-            className="accent-red-600 w-3.5 h-3.5"
-          />
-          <span className="text-gray-500 text-sm">I agree to receive updates</span>
-        </label>
       </section>
 
       <Footer />

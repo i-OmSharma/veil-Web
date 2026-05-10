@@ -11,10 +11,7 @@ export const handleDownload = async (event) => {
     const os = VALID_OS.includes(query.os) ? query.os : "linux";
 
     try {
-        await Promise.all([
-            incrementMetrics("visit_count"),
-            incrementMetrics(`download_count_${os}`),
-        ])
+        await incrementMetrics(`download_count_${os}`)
     } catch(err) {
         console.error("Error incrementing metrics", err)
     }

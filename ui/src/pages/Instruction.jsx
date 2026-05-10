@@ -18,8 +18,8 @@ export default function Instruction() {
               <div>
                 <h3 className="font-bold text-lg tracking-wide">Download veil</h3>
                 <div className="text-gray-600 text-base mt-2 max-w-lg space-y-2">
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">curl -Lo veil https://veils.systems/download?os=linux</code>
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">chmod +x veil && sudo mv veil /usr/local/bin/</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">curl -Lo veil https://veils.systems/download?os=linux</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">chmod +x veil && sudo mv veil /usr/local/bin/</code>
                 </div>
               </div>
             </div>
@@ -28,7 +28,7 @@ export default function Instruction() {
               <div>
                 <h3 className="font-bold text-lg tracking-wide">Run your first container</h3>
                 <div className="mt-2 max-w-lg">
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">sudo veil run ubuntu:22.04 /bin/bash</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">sudo veil run ubuntu:22.04 /bin/bash</code>
                 </div>
               </div>
             </div>
@@ -44,8 +44,8 @@ export default function Instruction() {
               <div>
                 <h3 className="font-bold text-lg tracking-wide">Pull any OCI image</h3>
                 <div className="mt-2 max-w-lg space-y-2">
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">sudo veil pull alpine:3.19</code>
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">sudo veil run alpine:3.19 /bin/sh</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">sudo veil pull alpine:3.19</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">sudo veil run alpine:3.19 /bin/sh</code>
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@ export default function Instruction() {
               <div>
                 <h3 className="font-bold text-lg tracking-wide">List running containers</h3>
                 <div className="mt-2 max-w-lg">
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">sudo veil ps</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">sudo veil ps</code>
                 </div>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function Instruction() {
               <div>
                 <h3 className="font-bold text-lg tracking-wide">Stop a container</h3>
                 <div className="mt-2 max-w-lg">
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">sudo veil stop &lt;container-id&gt;</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block overflow-x-auto whitespace-nowrap">sudo veil stop &lt;container-id&gt;</code>
                 </div>
               </div>
             </div>

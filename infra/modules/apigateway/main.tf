@@ -50,6 +50,12 @@ resource "aws_apigatewayv2_route" "feedback" {
   target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
 }
 
+resource "aws_apigatewayv2_route" "visit" {
+  api_id    = aws_apigatewayv2_api.api.id
+  route_key = "POST /api/visit"
+  target    = "integrations/${aws_apigatewayv2_integration.lambda.id}"
+}
+
 resource "aws_apigatewayv2_route" "options" {
   api_id    = aws_apigatewayv2_api.api.id
   route_key = "OPTIONS /{proxy+}"
@@ -93,6 +99,7 @@ resource "aws_apigatewayv2_deployment" "current" {
       jsonencode(aws_apigatewayv2_route.download),
       jsonencode(aws_apigatewayv2_route.stats),
       jsonencode(aws_apigatewayv2_route.feedback),
+      jsonencode(aws_apigatewayv2_route.visit),
       jsonencode(aws_apigatewayv2_route.options),
     ]))
   }

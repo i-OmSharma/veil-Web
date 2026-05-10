@@ -40,7 +40,7 @@ export default function FloatingPopup() {
   if (!showPopup) return null
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 w-72 bg-white border border-gray-200 shadow-sm p-6">
+    <div className="fixed bottom-4 right-4 left-4 sm:left-auto sm:right-6 sm:bottom-6 sm:w-72 z-50 bg-white border border-gray-200 shadow-sm p-6">
       <button
         type="button"
         aria-label="Close popup"
