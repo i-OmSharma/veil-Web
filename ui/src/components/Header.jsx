@@ -1,13 +1,15 @@
 import { useState } from 'react'
-
-const path = window.location.pathname
-const isHome = path === '/'
-const isInstruction = path === '/instruction'
-const isAbout = path === '/about'
-const isReleases = path === '/releases'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const isHome = pathname === '/'
+  const isInstruction = pathname === '/instruction'
+  const isAbout = pathname === '/about'
+  const isReleases = pathname === '/releases'
 
   const navClass = (active) =>
     active
@@ -19,6 +21,11 @@ export default function Header() {
       active ? 'text-red-600 bg-gray-50' : 'text-gray-500 hover:text-black hover:bg-gray-50'
     }`
 
+  const closeAndNavigate = (to) => {
+    setMenuOpen(false)
+    navigate(to)
+  }
+
   return (
     <header className="absolute top-0 left-0 w-full py-8 flex justify-between items-center z-10">
       <div className="flex-1 max-w-4xl mx-auto px-6 flex items-center">
@@ -27,28 +34,28 @@ export default function Header() {
             type="button"
             aria-label="Go to home"
             className="relative w-4 h-4 cursor-pointer focus:outline-none"
-            onClick={() => { window.location.href = '/' }}
+            onClick={() => navigate('/')}
           >
             <div className="absolute top-0 left-0 w-3 h-3 bg-red-600"></div>
             <div className="absolute bottom-0 right-0 w-3 h-3 bg-[#2d2d2d]"></div>
           </button>
           <nav className="hidden md:flex space-x-6 text-sm font-bold tracking-wide text-gray-500 uppercase">
-            <a className={navClass(isHome)} href="/">
+            <Link className={navClass(isHome)} to="/">
               Home
               {isHome && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
-            </a>
-            <a className={navClass(isInstruction)} href="/instruction">
+            </Link>
+            <Link className={navClass(isInstruction)} to="/instruction">
               Instruction
               {isInstruction && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
-            </a>
-            <a className={navClass(isReleases)} href="/releases">
+            </Link>
+            <Link className={navClass(isReleases)} to="/releases">
               Releases
               {isReleases && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
-            </a>
-            <a className={navClass(isAbout)} href="/about">
+            </Link>
+            <Link className={navClass(isAbout)} to="/about">
               About
               {isAbout && <span className="w-1 h-1 bg-black rounded-full mt-1"></span>}
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
@@ -64,10 +71,10 @@ export default function Header() {
         </button>
         {menuOpen && (
           <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 py-1 overflow-hidden">
-            <button type="button" className={menuItemClass(isHome)} onClick={() => { window.location.href = '/' }}>Home</button>
-            <button type="button" className={menuItemClass(isInstruction)} onClick={() => { window.location.href = '/instruction' }}>Instruction</button>
-            <button type="button" className={menuItemClass(isAbout)} onClick={() => { window.location.href = '/about' }}>About</button>
-            <button type="button" className={menuItemClass(isReleases)} onClick={() => { window.location.href = '/releases' }}>Releases</button>
+            <button type="button" className={menuItemClass(isHome)} onClick={() => closeAndNavigate('/')}>Home</button>
+            <button type="button" className={menuItemClass(isInstruction)} onClick={() => closeAndNavigate('/instruction')}>Instruction</button>
+            <button type="button" className={menuItemClass(isAbout)} onClick={() => closeAndNavigate('/about')}>About</button>
+            <button type="button" className={menuItemClass(isReleases)} onClick={() => closeAndNavigate('/releases')}>Releases</button>
           </div>
         )}
       </div>

@@ -48,15 +48,15 @@ export default function FloatingPopup() {
         ×
       </button>
       <p className="font-black text-sm tracking-tight text-[#2d2d2d] mb-1.5 pr-6">
-        Stay in the loop<span className="text-red-600">.</span>
+        Stay updated with Veil<span className="text-red-600">.</span>
       </p>
-      <p className="text-gray-600 text-xs leading-relaxed mb-5">Get Veil releases in your inbox.</p>
+      <p className="text-gray-600 text-xs leading-relaxed mb-5">Get product updates and new releases directly in your inbox.</p>
       <input
         id="popup-email"
         name="popup-email"
         type="email"
         aria-label="Email address"
-        placeholder="your@email.com"
+        placeholder="Enter your email"
         value={popupEmail}
         onChange={(e) => setPopupEmail(e.target.value)}
         className="w-full border border-gray-300 px-3 py-2.5 text-sm font-mono text-[#2d2d2d] placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors bg-white mb-3"

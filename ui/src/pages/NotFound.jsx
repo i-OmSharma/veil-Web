@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 
@@ -17,12 +18,12 @@ export default function NotFound() {
             This URL doesn&apos;t exist. Maybe you&apos;re looking for something that&apos;s coming soon.
           </p>
           <div className="mt-10">
-            <a
-              href="/"
+            <Link
+              to="/"
               className="font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 hover:text-red-600 hover:border-red-600 transition-colors duration-300 text-sm"
             >
               Back to Home
-            </a>
+            </Link>
           </div>
         </div>
       </main>

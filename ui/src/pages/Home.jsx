@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FloatingPopup from '../components/FloatingPopup'
@@ -6,6 +7,7 @@ import FloatingPopup from '../components/FloatingPopup'
 const validEmail = (e) => e.includes('@') && e.trim().length > 0
 
 export default function Home() {
+  const navigate = useNavigate()
   const [nlEmail, setNlEmail] = useState('')
   const [nlChecked, setNlChecked] = useState(false)
   const [nlStatus, setNlStatus] = useState(null)
@@ -43,12 +45,12 @@ export default function Home() {
                 }
 
                 if (isMac) {
-                  window.location.href = '/os-warning?os=mac'
+                  navigate('/os-warning?os=mac')
                   return
                 }
 
                 if (isWindows) {
-                  window.location.href = '/os-warning?os=windows'
+                  navigate('/os-warning?os=windows')
                   return
                 }
 
@@ -166,16 +168,16 @@ export default function Home() {
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
         <h2 className="text-2xl font-black tracking-tight text-[#2d2d2d]">
-          Stay updated with veil<span className="text-red-600">.</span>
+          Stay updated with Veil<span className="text-red-600">.</span>
         </h2>
-        <p className="text-gray-600 text-base mt-2">Get updates and releases</p>
+        <p className="text-gray-600 text-base mt-2">Get product updates and new releases directly in your inbox.</p>
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-8">
           <input
             id="nl-email"
             name="nl-email"
             type="email"
             aria-label="Email address"
-            placeholder="your@email.com"
+            placeholder="Enter your email"
             value={nlEmail}
             onChange={(e) => setNlEmail(e.target.value)}
             className="border border-gray-300 px-3 py-2.5 text-base font-mono text-[#2d2d2d] placeholder-gray-400 focus:outline-none focus:border-gray-500 transition-colors bg-white w-full sm:w-64"
