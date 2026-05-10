@@ -12,6 +12,7 @@ export default function Home() {
   const [nlChecked, setNlChecked] = useState(false)
   const [nlStatus, setNlStatus] = useState(null)
   const [downloads, setDownloads] = useState(null)
+  const [dlState, setDlState] = useState(null) // null | 'loading' | 'coming_soon'
 
   useEffect(() => {
     const BASE_URL = import.meta.env.VITE_API_URL || ""
@@ -20,6 +21,31 @@ export default function Home() {
       .then((d) => setDownloads(d.downloads))
       .catch(() => {})
   }, [])
+
+  const handleDownload = async () => {
+    const BASE_URL = import.meta.env.VITE_API_URL || ""
+    const platform = navigator.platform.toLowerCase()
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isMac = platform.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('mac os x')
+    const isWindows = platform.includes('win') || userAgent.includes('windows')
+
+    if (isMac) { navigate('/os-warning?os=mac'); return }
+    if (isWindows) { navigate('/os-warning?os=windows'); return }
+
+    setDlState('loading')
+    try {
+      const res = await fetch(`${BASE_URL}/download?os=linux`)
+      const data = await res.json()
+      if (data.status === 'coming_soon') {
+        setDlState('coming_soon')
+      } else if (data.url) {
+        window.location.href = data.url
+        setDlState(null)
+      }
+    } catch {
+      setDlState('coming_soon')
+    }
+  }
 
   return (
     <>
@@ -36,46 +62,46 @@ export default function Home() {
             Isolation, simplification, native Containers.
           </p>
           <div className="mt-12">
-            <button
-              type="button"
-              aria-label="Download veil for Linux"
-              className="group flex items-center space-x-4 focus:outline-none"
-              onClick={() => {
-                const BASE_URL = import.meta.env.VITE_API_URL || ""
-                const platform = navigator.platform.toLowerCase()
-                const userAgent = navigator.userAgent.toLowerCase()
-                const isMac = platform.includes('mac') || userAgent.includes('macintosh') || userAgent.includes('mac os x')
-                const isWindows = platform.includes('win') || userAgent.includes('windows')
-                const isLinux = platform.includes('linux') || userAgent.includes('linux')
-
-                if (isLinux) {
-                  window.location.href = `${BASE_URL}/download?os=linux`
-                  return
-                }
-
-                if (isMac) {
-                  navigate('/os-warning?os=mac')
-                  return
-                }
-
-                if (isWindows) {
-                  navigate('/os-warning?os=windows')
-                  return
-                }
-
-                window.location.href = `${BASE_URL}/download?os=linux`
-              }}
-            >
-              <span className="font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 group-hover:text-red-600 group-hover:border-red-600 transition-colors duration-300 text-sm">
-                Download Linux
-              </span>
-              <div className="w-12 h-12 bg-red-600 border border-red-600 rounded-full flex items-center justify-center group-hover:bg-[#2d2d2d] group-hover:border-[#2d2d2d] transition-all duration-300">
-                <svg className="w-5 h-5 text-white transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19 14l-7 7m0 0l-7-7m7 7V3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-                </svg>
+            {dlState === 'coming_soon' ? (
+              <div className="inline-block border-l-2 border-red-600 pl-4 py-1">
+                <p className="text-sm font-black text-[#2d2d2d] tracking-tight">Not released yet.</p>
+                <p className="text-sm text-gray-500 mt-0.5">
+                  Subscribe below to get notified on launch.{' '}
+                  <button
+                    type="button"
+                    className="text-red-600 font-bold underline underline-offset-2 focus:outline-none"
+                    onClick={() => setDlState(null)}
+                  >
+                    Dismiss
+                  </button>
+                </p>
               </div>
-            </button>
-            {downloads !== null && downloads > 0 && (
+            ) : (
+              <button
+                type="button"
+                aria-label="Download veil for Linux"
+                disabled={dlState === 'loading'}
+                className="group flex items-center space-x-4 focus:outline-none disabled:opacity-50"
+                onClick={handleDownload}
+              >
+                <span className="font-bold tracking-wide uppercase text-[#2d2d2d] border-b-2 border-[#2d2d2d] pb-1 group-hover:text-red-600 group-hover:border-red-600 transition-colors duration-300 text-sm">
+                  {dlState === 'loading' ? 'Checking...' : 'Download Linux'}
+                </span>
+                <div className="w-12 h-12 bg-red-600 border border-red-600 rounded-full flex items-center justify-center group-hover:bg-[#2d2d2d] group-hover:border-[#2d2d2d] transition-all duration-300">
+                  {dlState === 'loading' ? (
+                    <svg className="w-4 h-4 text-white animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path d="M19 14l-7 7m0 0l-7-7m7 7V3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                    </svg>
+                  )}
+                </div>
+              </button>
+            )}
+            {downloads !== null && downloads > 0 && dlState !== 'coming_soon' && (
               <p className="mt-4 text-xs text-gray-400 font-bold tracking-wide uppercase">
                 {downloads.toLocaleString()} download{downloads !== 1 ? 's' : ''}
               </p>
