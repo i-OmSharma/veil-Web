@@ -18,7 +18,7 @@ export default function Instruction() {
               <div>
                 <h3 className="font-bold text-lg tracking-wide">Download veil</h3>
                 <div className="text-gray-600 text-base mt-2 max-w-lg space-y-2">
-                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">curl -Lo veil https://d2j4l2b1keiov4.cloudfront.net/download?os=linux</code>
+                  <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">curl -Lo veil https://veils.systems/download?os=linux</code>
                   <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 block">chmod +x veil && sudo mv veil /usr/local/bin/</code>
                 </div>
               </div>

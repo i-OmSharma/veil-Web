@@ -85,6 +85,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   enabled             = true
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
+  aliases             = var.domain_aliases
 
   # ACL must be applied to the logs bucket before CloudFront attempts log delivery
   depends_on = [aws_s3_bucket_acl.cf_logs]
@@ -191,10 +192,8 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
-    # TODO production: ACM cert must be in us-east-1
-    # acm_certificate_arn      = var.acm_certificate_arn
-    # ssl_support_method       = "sni-only"
-    # minimum_protocol_version = "TLSv1.2_2021"
+    acm_certificate_arn      = var.acm_certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 }

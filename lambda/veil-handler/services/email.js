@@ -47,7 +47,7 @@ const baseTemplate = (content) => `
             <td style="background:#2d2d2d;padding:24px 48px;">
               <p style="font-size:11px;color:#6b7280;margin:0;line-height:1.7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
                 You received this email because you signed up at
-                <a href="https://d2j4l2b1keiov4.cloudfront.net" style="color:#dc2626;text-decoration:none;">veil</a>.
+                <a href="https://veils.systems" style="color:#dc2626;text-decoration:none;">veil</a>.
                 &nbsp;·&nbsp;
                 <a href="mailto:support@veils.systems" style="color:#6b7280;text-decoration:none;">support@veils.systems</a>
                 <br />© ${new Date().getFullYear()} Veil. All rights reserved.
@@ -79,7 +79,7 @@ const subscriptionHtml = () => baseTemplate(`
       <table cellpadding="0" cellspacing="0" style="margin-top:8px;">
         <tr>
           <td style="background:#2d2d2d;padding:13px 24px;">
-            <a href="https://d2j4l2b1keiov4.cloudfront.net" style="font-size:11px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Visit Site</a>
+            <a href="https://veils.systems" style="font-size:11px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:1.5px;text-transform:uppercase;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">Visit Site</a>
           </td>
           <td width="16"></td>
           <td style="padding:13px 0;border-bottom:2px solid #2d2d2d;">

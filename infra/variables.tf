@@ -28,3 +28,14 @@ variable "resend_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "acm_certificate_arn" {
+  description = "ACM certificate ARN in us-east-1 for CloudFront HTTPS"
+  type        = string
+}
+
+variable "domain_aliases" {
+  description = "Custom domain names served by CloudFront"
+  type        = list(string)
+  default     = []
+}

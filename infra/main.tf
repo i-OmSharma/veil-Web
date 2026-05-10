@@ -56,6 +56,8 @@ module "cloudfront" {
   binaries_bucket_domain = module.s3.binaries_bucket_domain
   binaries_bucket_arn    = module.s3.binaries_bucket_arn
   api_domain             = trimsuffix(replace(module.apigateway.api_url, "https://", ""), "/")
+  acm_certificate_arn    = var.acm_certificate_arn
+  domain_aliases         = var.domain_aliases
   tags                   = local.tags
 }
 

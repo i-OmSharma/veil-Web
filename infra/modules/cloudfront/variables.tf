@@ -33,6 +33,17 @@ variable "api_domain" {
   }
 }
 
+variable "acm_certificate_arn" {
+  description = "ACM certificate ARN — must be in us-east-1 for CloudFront"
+  type        = string
+}
+
+variable "domain_aliases" {
+  description = "Custom domain names for CloudFront (e.g. veils.systems, www.veils.systems)"
+  type        = list(string)
+  default     = []
+}
+
 variable "tags" {
   type    = map(string)
   default = {}
