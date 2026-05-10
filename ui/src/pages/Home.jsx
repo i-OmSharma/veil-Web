@@ -11,14 +11,14 @@ export default function Home() {
   const [nlEmail, setNlEmail] = useState('')
   const [nlChecked, setNlChecked] = useState(false)
   const [nlStatus, setNlStatus] = useState(null)
-  const [downloads, setDownloads] = useState(null)
+  const [stats, setStats] = useState(null)
   const [dlState, setDlState] = useState(null) // null | 'loading' | 'coming_soon'
 
   useEffect(() => {
     const BASE_URL = import.meta.env.VITE_API_URL || ""
     fetch(`${BASE_URL}/api/stats`)
       .then((r) => r.json())
-      .then((d) => setDownloads(d.downloads))
+      .then((d) => setStats(d))
       .catch(() => {})
   }, [])
 
@@ -101,11 +101,6 @@ export default function Home() {
                 </div>
               </button>
             )}
-            {downloads !== null && downloads > 0 && dlState !== 'coming_soon' && (
-              <p className="mt-4 text-xs text-gray-400 font-bold tracking-wide uppercase">
-                {downloads.toLocaleString()} download{downloads !== 1 ? 's' : ''}
-              </p>
-            )}
           </div>
         </div>
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
@@ -114,6 +109,23 @@ export default function Home() {
             <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
           </svg>
         </div>
+
+        {stats && (stats.downloads > 0 || stats.visits > 0) && (
+          <div className="absolute bottom-8 left-6 flex flex-col gap-2 pointer-events-none">
+            {stats.downloads > 0 && (
+              <div>
+                <p className="text-xl font-black text-[#2d2d2d] leading-none">{stats.downloads.toLocaleString()}</p>
+                <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400 mt-0.5">Downloads</p>
+              </div>
+            )}
+            {stats.visits > 0 && (
+              <div>
+                <p className="text-xl font-black text-[#2d2d2d] leading-none">{stats.visits.toLocaleString()}</p>
+                <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400 mt-0.5">Visits</p>
+              </div>
+            )}
+          </div>
+        )}
       </main>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20">
