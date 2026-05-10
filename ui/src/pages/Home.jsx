@@ -11,15 +11,11 @@ export default function Home() {
   const [nlEmail, setNlEmail] = useState('')
   const [nlChecked, setNlChecked] = useState(false)
   const [nlStatus, setNlStatus] = useState(null)
-  const [stats, setStats] = useState(null)
   const [dlState, setDlState] = useState(null) // null | 'loading' | 'coming_soon'
 
   useEffect(() => {
     const BASE_URL = import.meta.env.VITE_API_URL || ""
-    fetch(`${BASE_URL}/api/visit`, { method: 'POST' })
-      .then((r) => r.json())
-      .then((d) => setStats(d))
-      .catch(() => {})
+    fetch(`${BASE_URL}/api/visit`, { method: 'POST' }).catch(() => {})
   }, [])
 
   const handleDownload = async () => {
@@ -37,11 +33,9 @@ export default function Home() {
       const res = await fetch(`${BASE_URL}/download?os=linux`)
       const data = await res.json()
       if (data.status === 'coming_soon') {
-        setStats((prev) => prev ? { ...prev, downloads: prev.downloads + 1 } : prev)
         setDlState('coming_soon')
       } else if (data.url) {
         window.location.href = data.url
-        setStats((prev) => prev ? { ...prev, downloads: prev.downloads + 1 } : prev)
         setDlState(null)
       }
     } catch {
@@ -112,22 +106,6 @@ export default function Home() {
           </svg>
         </div>
 
-        {stats && (stats.downloads > 0 || stats.visits > 0) && (
-          <div className="fixed bottom-8 left-6 hidden sm:flex flex-col gap-2 pointer-events-none z-10">
-            {stats.downloads > 0 && (
-              <div>
-                <p className="text-xl font-black text-[#2d2d2d] leading-none">{stats.downloads.toLocaleString()}</p>
-                <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400 mt-0.5">Downloads</p>
-              </div>
-            )}
-            {stats.visits > 0 && (
-              <div>
-                <p className="text-xl font-black text-[#2d2d2d] leading-none">{stats.visits.toLocaleString()}</p>
-                <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400 mt-0.5">Visits</p>
-              </div>
-            )}
-          </div>
-        )}
       </main>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20">
