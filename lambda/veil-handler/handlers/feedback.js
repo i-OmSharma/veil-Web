@@ -1,6 +1,6 @@
 import { json } from "../utils/response.js";
 import { saveFeedback } from "../services/dynamodb.js";
-import { sendEmail } from "../services/email.js";
+import { sendSubscriptionEmail, sendFeedbackEmail } from "../services/email.js";
 
 export const handleFeedback = async (event) => {
   let body;
@@ -14,19 +14,21 @@ export const handleFeedback = async (event) => {
     return json(400, { message: "Valid email required" });
   }
 
+  const message = body.message || "";
+
   const data = {
     email: body.email,
-    message: body.message || "",
+    message,
     timestamp: Date.now(),
   };
 
   try {
     await saveFeedback(data);
-    await sendEmail(
-      body.email,
-      "Feedback for veil",
-      `Thank you for your feedback. We will get back to you soon. \n\n Message: ${body.message}`,
-    );
+    if (message.trim().length === 0) {
+      await sendSubscriptionEmail(body.email);
+    } else {
+      await sendFeedbackEmail(body.email, message);
+    }
     return json(200, { message: "Feedback submitted successfully" });
   } catch (error) {
     console.error("Error submitting feedback", error);
