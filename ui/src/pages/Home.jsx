@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FloatingPopup from '../components/FloatingPopup'
+import { Terminal, TypingAnimation, AnimatedSpan } from '../components/AnimatedTerminal'
 
 const validEmail = (e) => e.includes('@') && e.trim().length > 0
 
@@ -30,14 +31,8 @@ export default function Home() {
 
     setDlState('loading')
     try {
-      const res = await fetch(`${BASE_URL}/download?os=linux`)
-      const data = await res.json()
-      if (data.status === 'coming_soon') {
-        setDlState('coming_soon')
-      } else if (data.url) {
-        window.location.href = data.url
-        setDlState(null)
-      }
+      window.location.href = `${BASE_URL}/download?os=linux`
+      setDlState(null)
     } catch {
       setDlState('coming_soon')
     }
@@ -57,7 +52,7 @@ export default function Home() {
           <p className="text-gray-600 text-lg md:text-xl font-normal tracking-wide mt-4 max-w-md">
             Isolation, simplification, native Containers.
           </p>
-          <div className="mt-12">
+          <div className="mt-12 inline-block">
             {dlState === 'coming_soon' ? (
               <div className="inline-block border-l-2 border-red-600 pl-4 py-1">
                 <p className="text-sm font-black text-[#2d2d2d] tracking-tight">Not released yet.</p>
@@ -97,19 +92,19 @@ export default function Home() {
                 </div>
               </button>
             )}
+            <div className="mt-8 flex items-center justify-end gap-2 pr-16 pointer-events-none">
+              <span className="text-gray-400 text-xs font-bold tracking-wide uppercase">Scroll</span>
+              <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+              </svg>
+            </div>
           </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 pointer-events-none">
-          <span className="text-gray-300 text-xs font-bold tracking-wide uppercase">Scroll</span>
-          <svg className="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path d="M19 9l-7 7-7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
-          </svg>
         </div>
 
       </main>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20">
-        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">What is Veil</h2>
+        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-500 mb-6">What is Veil</h2>
         <p className="text-2xl font-black tracking-tight text-[#2d2d2d] leading-snug max-w-xl">
           A lightweight container runtime built on Linux primitives.
         </p>
@@ -119,7 +114,7 @@ export default function Home() {
       </section>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
-        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">How it Works</h2>
+        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-500 mb-6">How it Works</h2>
         <div className="space-y-8">
           <div className="flex items-start space-x-4">
             <span className="text-red-600 font-black text-2xl leading-none mt-1 w-8 shrink-0">01</span>
@@ -146,49 +141,34 @@ export default function Home() {
       </section>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
-        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">CLI Example</h2>
-        <div className="bg-[#2d2d2d] rounded-xl px-6 py-5 inline-block border border-[#1a1a1a] w-full max-w-full overflow-x-auto">
-          <div className="flex items-center space-x-2 mb-3">
-            <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-green-400"></span>
-          </div>
-          <pre className="text-base font-mono text-gray-300 leading-relaxed">
-            <span className="text-gray-500">$ </span>
-            <span className="text-white">veil pull ubuntu:22.04</span>
-            {'\n'}
-            <span className="text-gray-500">→ pulling ubuntu:22.04 from registry</span>
-            {'\n'}
-            <span className="text-gray-500">→ unpacking 3 layers</span>
-            {'\n'}
-            <span className="text-green-400">✓ image ready</span>
-            {'\n'}
-            {'\n'}
-            <span className="text-gray-500">$ </span>
-            <span className="text-white">veil run ubuntu:22.04 /bin/bash</span>
-            {'\n'}
-            <span className="text-gray-500">→ creating namespaces</span>
-            {'\n'}
-            <span className="text-gray-500">→ mounting overlayfs</span>
-            {'\n'}
-            <span className="text-gray-500">→ applying cgroup limits (256MB / 50% cpu)</span>
-            {'\n'}
-            <span className="text-green-400">✓ container ready  [veil-4821]</span>
-            {'\n'}
-            {'\n'}
-            {'root@veil-4821:/# '}
-          </pre>
-        </div>
+        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-500 mb-6">CLI Example</h2>
+        <Terminal>
+          <TypingAnimation delay={0}>$ veil pull ubuntu:22.04</TypingAnimation>
+          <AnimatedSpan className="text-gray-500" delay={1200}>[image] Pulling ubuntu:22.04...</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={1600}>[image] Extracting layer 1/3...</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={2000}>[image] Extracting layer 2/3...</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={2400}>[image] Extracting layer 3/3...</AnimatedSpan>
+          <AnimatedSpan className="text-green-400" delay={2800}>[image] Pulled: ubuntu:22.04</AnimatedSpan>
+          <TypingAnimation delay={3400}>$ veil run -m 268435456 ubuntu:22.04 /bin/bash</TypingAnimation>
+          <AnimatedSpan className="text-gray-500" delay={5200}>[container] rootfs: /var/lib/veil/images/ubuntu-22.04/rootfs</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={5500}>[container] cgroups applied</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={5800}>[init] hostname: veil-4821</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={6100}>[init] pivoted to rootfs</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={6400}>[init] mounted /proc</AnimatedSpan>
+          <AnimatedSpan className="text-gray-500" delay={6700}>[init] exec: [/bin/bash]</AnimatedSpan>
+          <AnimatedSpan className="text-green-400" delay={7000}>[container] ready</AnimatedSpan>
+          <TypingAnimation delay={7600} className="text-white">root@veil-4821:/#</TypingAnimation>
+        </Terminal>
       </section>
 
       <section className="w-full max-w-4xl mx-auto px-6 py-20 border-t border-gray-100">
-        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">Why Veil</h2>
+        <h2 className="text-xs font-bold tracking-wide uppercase text-gray-500 mb-6">Why Veil</h2>
         <ul className="space-y-4">
           {[
             'Single binary — drop it in PATH and run.',
             'No daemon required. No background services.',
-            'Native Linux syscalls only. Zero runtime deps.',
-            'Fast cold start. Containers spin up in milliseconds.',
+            'OCI compliant — pull & Push any Container Repository(DockerHub, GHCR, ECR).',
+            'Full networking — veth pair, bridge, NAT, port forwarding.',
           ].map((point, i) => (
             <li key={i} className="flex items-start space-x-3">
               <span className="text-red-600 font-black mt-0.5">—</span>

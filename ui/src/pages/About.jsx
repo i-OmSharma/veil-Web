@@ -19,24 +19,16 @@ export default function About() {
           <div className="mt-8 flex flex-wrap gap-12">
             <div>
               <span className="text-4xl font-black text-[#2d2d2d]">100<span className="text-red-600">%</span></span>
-              <p className="text-gray-400 text-sm font-bold tracking-wide uppercase mt-1">Native Linux</p>
-            </div>
-            <div>
-              <span className="text-4xl font-black text-[#2d2d2d]">&lt;8<span className="text-red-600">MB</span></span>
-              <p className="text-gray-400 text-sm font-bold tracking-wide uppercase mt-1">Binary Size</p>
-            </div>
-            <div>
-              <span className="text-4xl font-black text-[#2d2d2d]">0<span className="text-red-600">deps</span></span>
-              <p className="text-gray-400 text-sm font-bold tracking-wide uppercase mt-1">Dependencies</p>
+              <p className="text-gray-500 text-sm font-bold tracking-wide uppercase mt-1">Native Linux</p>
             </div>
             <div>
               <span className="text-4xl font-black text-[#2d2d2d]">v<span className="text-red-600">2</span></span>
-              <p className="text-gray-400 text-sm font-bold tracking-wide uppercase mt-1">cgroups only</p>
+              <p className="text-gray-500 text-sm font-bold tracking-wide uppercase mt-1">cgroups only</p>
             </div>
           </div>
 
           <section className="w-full py-20 border-t border-gray-100 mt-12">
-            <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">Features</h2>
+            <h2 className="text-xs font-bold tracking-wide uppercase text-gray-500 mb-6">Features</h2>
             <div className="space-y-8">
               <div className="flex items-start space-x-4">
                 <span className="text-red-600 font-black text-2xl leading-none mt-1 w-8 shrink-0">01</span>
@@ -84,14 +76,14 @@ export default function About() {
           </section>
 
           <section className="w-full py-20 border-t border-gray-100">
-            <h2 className="text-xs font-bold tracking-wide uppercase text-gray-400 mb-6">Veil vs The World</h2>
+            <h2 className="text-xs font-bold tracking-wide uppercase text-gray-500 mb-6">Veil vs The World</h2>
 
             {/* Comparison grid — 4 columns, no borders */}
             <div className="mb-10">
               <div className="grid grid-cols-4 gap-x-6 mb-4">
-                <span className="text-xs font-bold tracking-wide uppercase text-gray-300"></span>
-                <span className="text-xs font-bold tracking-wide uppercase text-gray-400">Docker</span>
-                <span className="text-xs font-bold tracking-wide uppercase text-gray-400">Podman</span>
+                <span className="text-xs font-bold tracking-wide uppercase text-gray-400"></span>
+                <span className="text-xs font-bold tracking-wide uppercase text-gray-500">Docker</span>
+                <span className="text-xs font-bold tracking-wide uppercase text-gray-500">Podman</span>
                 <span className="text-xs font-bold tracking-wide uppercase text-[#2d2d2d]">veil</span>
               </div>
               {[
@@ -104,7 +96,7 @@ export default function About() {
                 // ['Cold start',     '~500ms',            '~200ms',           '<50ms'],
               ].map(([label, docker, podman, veil], i) => (
                 <div key={i} className="grid grid-cols-4 gap-x-6 py-2.5 border-t border-gray-100">
-                  <span className="text-xs font-bold tracking-wide uppercase text-gray-400">{label}</span>
+                  <span className="text-xs font-bold tracking-wide uppercase text-gray-500">{label}</span>
                   <span className="text-xs text-gray-600">{docker}</span>
                   <span className="text-xs text-gray-600">{podman}</span>
                   <span className="text-xs text-[#2d2d2d] font-bold">{veil}</span>

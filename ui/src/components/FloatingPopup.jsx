@@ -44,7 +44,7 @@ export default function FloatingPopup() {
       <button
         type="button"
         aria-label="Close popup"
-        className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 leading-none focus:outline-none"
+        className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 leading-none focus:outline-none"
         onClick={dismissPopup}
       >
         ×
