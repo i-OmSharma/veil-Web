@@ -3,16 +3,32 @@ import Footer from '../components/Footer'
 
 const releases = [
   {
-    version: 'v0.1.0',
+    version: 'v0.1.1',
     date: 'May 2025',
     tag: 'latest',
+    description: 'prune command — clean up stopped containers, unused images, and overlay mounts.',
+    assets: [
+      {
+        os: 'Linux (x86_64)',
+        file: 'veil',
+        available: true,
+        url: 'https://github.com/i-OmSharma/veil/releases/latest/download/veil'
+      },
+      { os: 'macOS (arm64)', file: 'veil-darwin-arm64', available: false },
+      { os: 'Windows (x86_64)', file: 'veil-windows-amd64.exe', available: false },
+    ],
+  },
+  {
+    version: 'v0.1.0',
+    date: 'May 2025',
+    tag: 'stable',
     description: 'Initial release — namespaces, cgroups v2, OverlayFS, OCI image pull/push, veth networking, port forwarding, volume mounts.',
     assets: [
       {
         os: 'Linux (x86_64)',
-        file: 'veil-linux-amd64',
+        file: 'veil',
         available: true,
-        url: 'https://github.com/i-OmSharma/veil/releases/latest/download/veil-linux-amd64'
+        url: 'https://github.com/i-OmSharma/veil/releases/download/v0.1.0/veil'
       },
       { os: 'macOS (arm64)', file: 'veil-darwin-arm64', available: false },
       { os: 'Windows (x86_64)', file: 'veil-windows-amd64.exe', available: false },
