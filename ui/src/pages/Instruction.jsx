@@ -49,8 +49,8 @@ export default function Instruction() {
                 <h3 className="font-bold text-lg tracking-wide">Download veil</h3>
                 <div className="text-gray-600 text-base mt-2 max-w-lg space-y-2">
                   <div className="relative">
-                    <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 pr-14 block overflow-x-auto whitespace-nowrap">curl -Lo veil https://github.com/i-OmSharma/veil/releases/latest/download/veil-linux-amd64</code>
-                    <CopyButton text="curl -Lo veil https://github.com/i-OmSharma/veil/releases/latest/download/veil-linux-amd64" />
+                    <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 pr-14 block overflow-x-auto whitespace-nowrap">curl -Lo veil https://github.com/i-OmSharma/veil/releases/latest/download/veil</code>
+                    <CopyButton text="curl -Lo veil https://github.com/i-OmSharma/veil/releases/latest/download/veil" />
                   </div>
                   <div className="relative">
                     <code className="bg-[#f4f4f4] font-mono text-sm px-3 py-2 pr-14 block overflow-x-auto whitespace-nowrap">chmod +x veil && sudo mv veil /usr/local/bin/</code>

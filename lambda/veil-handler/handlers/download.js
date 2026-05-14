@@ -18,7 +18,7 @@ export const handleDownload = async (event) => {
 
     if (os === "linux") {
         return redirect(
-          "https://github.com/i-OmSharma/veil/releases/latest/download/veil-linux-amd64"
+          "https://github.com/i-OmSharma/veil/releases/latest/download/veil"
         );
     }
 
